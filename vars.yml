@@ -1,0 +1,16 @@
+ssh_keys:
+  - name: fink.weltzerstoerung
+    key: "{{ lookup('file', 'files/ssh/fink.weltzerstoerung.pub') }}"
+  - name: lorenzen.friedrich
+    key: "{{ lookup('file', 'files/ssh/lorenzen.friedrich.pub') }}"
+
+ssh_key_users:
+  - root
+
+vim_config:
+  - 'set tabstop=2'
+  - 'set shiftwidth=2'
+  - 'syntax enable'
+  - 'set background=dark'
+
+ans_hostname_fqdn: "{{ lookup('pipe','hostname -f') }}"

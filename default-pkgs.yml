@@ -1,0 +1,65 @@
+---
+- hosts: all
+  vars_files:
+    - vars.yml
+  roles: 
+    - franklinkim.vim
+  tasks:
+    - name: Ensure vim is installed
+      apt: name=vim state=installed
+
+    - name: Ensure screen is installed
+      apt: name=screen state=installed
+
+    - name: Ensure byobu is installed
+      apt: name=byobu state=installed
+
+    - name: Ensure git is installed
+      apt: name=git state=installed
+
+    - name: Add ssh keys to root
+      authorized_key: user=root key="{{ item.key }}"
+      with_items: ssh_keys
+
+    - name: Check if fox-meta is installed
+      command: dpkg-query -W fox-meta
+      register: deb_check_fox_meta
+      ignore_errors: True
+
+    - name: download fox-meta.deb
+      get_url: url=http://deb.axxeo.de/pool/contrib/f/fox-meta/fox-meta_7.2.0.1_all.deb dest=/tmp/ sha256sum=07d16f9a45ab87221bee93803f57dd1a3b2a0335f121beb7b9594917c276fa55
+      when: deb_check_fox_meta.stderr.find('no packages found')
+
+    - name: install fox-meta.deb
+      apt: deb=/tmp/fox-meta_7.2.0.1_all.deb
+      when: deb_check_fox_meta.stderr.find('no packages found')
+
+    - name: Ensure gitmaintainer is installed
+      apt: name=gitmaintainer state=installed update_cache=yes cache_valid_time=3600
+
+    - name: init gitmaintainer
+      shell: gitmaintainer init creates=/.gitmaintainer
+
+    - name: run initial gitmaintainer-commit
+      shell: gitmaintainer commit -m "hello world" creates=/.git/logs/HEAD
+      # shell: echo $GIT_COMMITTER_NAME >> /tmp/anstemp
+      environment:
+        GIT_AUTOCOMMIT: "true"
+        GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+        GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
+
+    - debug: var=ans_hostname_fqdn
+
+#      register: result
+#    - debug: var=result
+
+
+      
+#command: gitmaintainer commit -m "init"
+
+# FIXME
+#    - name: Add ssh keys to multiple users
+#      authorized_key: user={{ssh_key_users.item | root}} key="{{ item.key }}"
+#      with_nested:
+#        - ssh_keys
+#        - ssh_key_users

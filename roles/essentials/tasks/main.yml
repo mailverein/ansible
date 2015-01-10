@@ -1,0 +1,36 @@
+---
+# tasks file for roles/essentials
+- name: Ensure vim is installed
+  apt: name=vim state=installed
+
+- name: Ensure screen is installed
+  apt: name=screen state=installed
+
+- name: Ensure byobu is installed
+  apt: name=byobu state=installed
+
+- name: Ensure git is installed
+  apt: name=git state=installed
+
+- name: Ensure htop is installed
+  apt: name=htop state=installed
+
+- name: Ensure strace is installed
+  apt: name=strace state=installed
+
+- name: Ensure iftop is installed
+  apt: name=iftop state=installed
+
+- name: Check if fox-meta is installed
+  command: dpkg-query -W fox-meta
+  register: deb_check_fox_meta
+  ignore_errors: True
+
+- name: download fox-meta.deb
+  get_url: url=http://deb.axxeo.de/pool/contrib/f/fox-meta/fox-meta_7.2.0.1_all.deb dest=/tmp/ sha256sum=07d16f9a45ab87221bee93803f57dd1a3b2a0335f121beb7b9594917c276fa55
+  when: deb_check_fox_meta.stderr.find('no packages found')
+
+- name: install fox-meta.deb
+  apt: deb=/tmp/fox-meta_7.2.0.1_all.deb
+  when: deb_check_fox_meta.stderr.find('no packages found')
+

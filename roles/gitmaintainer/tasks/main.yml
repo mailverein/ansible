@@ -1,0 +1,14 @@
+---
+# tasks file for roles/gitmaintainer
+- name: Ensure gitmaintainer is installed
+  apt: name=gitmaintainer state=installed update_cache=yes cache_valid_time=3600
+
+- name: init gitmaintainer
+  shell: gitmaintainer init creates=/.gitmaintainer
+
+- name: initial gitmaintainer-commit
+  shell: gitmaintainer commit -m "hello world" creates=/.git/logs/HEAD
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"

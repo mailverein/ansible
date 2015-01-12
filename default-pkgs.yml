@@ -50,6 +50,14 @@
 
     - debug: var=ans_hostname_fqdn
 
+    - name: ensure python-apt is installed (to fiddle with source.list)
+      apt: name=python-apt state=installed
+
+    - name: add dotdeb-repo
+      apt_repository: repo='deb http://packages.dotdeb.org {{ $distro_codename }} main' state=present
+      #apt_repository: repo='deb http://packages.dotdeb.org {{ ansible_distribution_release }} main' state=present
+
+
 #      register: result
 #    - debug: var=result
 

@@ -1,0 +1,25 @@
+---
+# tasks file for exim4-dovecot-mailer
+- name: check if a mail transfer agent is installed
+  command: grep-status -sPackage -sProvides -FProvides "mail-transport-agent" -q
+  register: mta_installed
+  ignore_errors: True
+
+- name: install exim4-daemon-heavy
+  apt: pkg=exim4-daemon-heavy state=installed
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
+
+- name: install spamassassin
+  apt: pkg=spamassassin state=installed
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
+
+#- name: Update configfile update-exim4.conf.conf
+#  template: src=etc/exim4/update-exim4.conf.conf.j2 dest=/etc/exim4/update-exim4.conf.conf
+#  tags: [exim]
+#  notify: update exim4.conf

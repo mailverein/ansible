@@ -1,0 +1,4 @@
+- hosts: mailtest.docker.mafia-server.net
+  roles:
+    - essentials
+    - exim4-dovecot-mailer

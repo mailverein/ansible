@@ -18,6 +18,9 @@
 - name: Ensure strace is installed
   apt: name=strace state=installed
 
+- name: Ensure dctrl-tools are installed
+  apt: name=dctrl-tools state=installed
+
 - name: Ensure iftop is installed
   apt: name=iftop state=installed
 
@@ -34,3 +37,16 @@
   apt: deb=/tmp/fox-meta_7.2.0.1_all.deb
   when: deb_check_fox_meta.stderr.find('no packages found')
 
+- name: Ensure gitmaintainer is installed
+  apt: name=gitmaintainer state=installed update_cache=yes cache_valid_time=3600
+
+- name: init gitmaintainer
+  shell: gitmaintainer init creates=/.gitmaintainer
+
+- name: run initial gitmaintainer-commit
+  shell: gitmaintainer commit -m "hello world" creates=/.git/logs/HEAD
+  # shell: echo $GIT_COMMITTER_NAME >> /tmp/anstemp
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"

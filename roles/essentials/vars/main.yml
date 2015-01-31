@@ -1,2 +1,6 @@
 ---
 # vars file for roles/essentials
+environment:
+  GIT_AUTOCOMMIT: "true"
+  GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+  GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"

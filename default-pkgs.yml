@@ -17,6 +17,9 @@
     - name: Ensure git is installed
       apt: name=git state=installed
 
+    - name: Ensure dctrl-tools are installed
+      apt: name=dctrl-tools state=installed
+
     - name: Add ssh keys to root
       authorized_key: user=root key="{{ item.key }}"
       with_items: ssh_keys

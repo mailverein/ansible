@@ -2,3 +2,6 @@
   roles:
     - essentials
     - exim4-dovecot-mailer
+  tasks:
+    - name: run env-writer
+      command: /usr/local/bin/write-env.sh

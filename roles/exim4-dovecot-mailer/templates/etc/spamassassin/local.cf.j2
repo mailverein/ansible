@@ -82,3 +82,10 @@ ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 # shortcircuit BAYES_00                ham
 
 endif # Mail::SpamAssassin::Plugin::Shortcircuit
+
+
+# do not spamcheck/block administrative localparts
+# we want to know if we send spam...
+whitelist_to abuse@*
+whitelist_to postmaster@*
+whitelist_to hostmaster@*

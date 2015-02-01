@@ -1,0 +1,61 @@
+#MAIN_TLS_TRY_VERIFY_HOSTS=
+
+# Log to Syslog (and normal files), making it easier to create specific files
+#FIXME
+#LOG_FILE_PATH=:syslog
+
+# Where are antivirus and antispam scanning engines?
+av_scanner = clamd:/var/run/clamav/clamd.ctl
+spamd_address = /run/spamassassin.sock
+
+# disable Ident-Lookups (e.g. GMX behaves wrong and times out)
+rfc1413_query_timeout = 0s
+
+# allow & in remote address
+CHECK_RCPT_REMOTE_LOCALPARTS = ^[./|] : ^.*[@%!\'`#?] : ^.*/\\.\\./
+
+# use exim internal scanner and disable amavis
+CHECK_DATA_LOCAL_ACL_FILE = CONFDIR/data-check-scan-acl
+
+## recipient callout
+#CHECK_RCPT_LOCAL_ACL_FILE = CONFDIR/recipient-callout-acl
+
+# enable authentication using courier auth daemon
+COURIER_AUTH = true
+
+# allow auth without TLS
+#AUTH_SERVER_ALLOW_NOTLS_PASSWORDS = true
+
+# TLS config
+MAIN_TLS_ENABLE = true
+MAIN_TLS_CERTIFICATE = /etc/ssl/private/{{ssl_cert_name}}
+MAIN_TLS_PRIVATEKEY = /etc/ssl/private/{{ssl_key_name}}
+tls_on_connect_ports = 465
+gnutls_compat_mode = true
+
+#tls_require_ciphers = ALL:-SSLv3:-RC4:-SSLv2:!ADH:+HIGH:+MEDIUM:-LOW:-EXP
+
+# Take domain lists from files -> edit via FoX-Admin
+#MAIN_LOCAL_DOMAINS = CONFDIR/local_domains
+#MAIN_RELAY_TO_DOMAINS = CONFDIR/relay_domains
+
+# check if domain has DNS (ignores if MX is not but CNAME/A is set)
+# deactivation for domains/mailaddys via CONFDIR/{host,sender}_local_deny_exceptions
+CHECK_RCPT_VERIFY_SENDER = true
+
+CHECK_RCPT_SPF = true
+
+# max message size limit for all users
+MESSAGE_SIZE_LIMIT = 50M
+
+# mark at level 5.0 by default
+SPAM_MARK_LEVEL = 40
+
+# reject at level 12.0 by default
+SPAM_REJECT_LEVEL = 75
+
+# scan only up to 200k of messages for spam
+SPAM_SCAN_MAX_SIZE = 280K
+
+# virus spreading extensions
+MIME_FORBIDDEN_EXTENSION = com:vbs:bat:pif:scr:exe

@@ -1,4 +1,3 @@
----
 environment:
   GIT_AUTOCOMMIT: "true"
   GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"

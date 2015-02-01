@@ -1,0 +1,15 @@
+mailprojekt-ansible
+====================
+
+branches
+---------
+
+default-configs
+  import from vanilla debian 7
+
+cfg-changes
+  own changes and new config-files
+
+feature/*
+  new features
+

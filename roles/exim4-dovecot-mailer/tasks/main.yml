@@ -1,41 +1,8 @@
 ---
 # tasks file for exim4-dovecot-mailer
-- name: check if a mail transfer agent is installed
-  command: grep-status -sPackage -sProvides -FProvides "mail-transport-agent" -q
-  register: mta_installed
-  ignore_errors: True
-
-- name: install exim4-daemon-heavy
-  apt: pkg=exim4-daemon-heavy state=installed
-  environment:
-    GIT_AUTOCOMMIT: "true"
-    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
-    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
-
-- name: install spf-tools-perl
-  apt: pkg=spf-tools-perl state=installed
-  environment:
-    GIT_AUTOCOMMIT: "true"
-    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
-    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
-
-- name: install spamassassin
-  apt: pkg=spamassassin state=installed
-  environment:
-    GIT_AUTOCOMMIT: "true"
-    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
-    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
-
-- name: install greylistd
-  apt: pkg=greylistd state=installed
-  environment:
-    GIT_AUTOCOMMIT: "true"
-    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
-    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
-
-- name: Enable greylistd in exim4-config
-  command: "greylistd-setup-exim4 -netmask=24 add"
-
+ - include: exim4.yml
+ - include: spamassassin.yml
+ - include: greylistd.yml
 
 - name: run gitmaintainer-commit
   shell: gitmaintainer commit -m "ansible-playbook exim4-dovecot-mailer completed"

@@ -1,0 +1,17 @@
+---
+- name: install spamassassin
+  apt: pkg=spamassassin state=installed
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
+
+- name: Update config etc/default/spamassassin
+  template: src=etc/default/spamassassin.j2 dest=/etc/default/spamassassin
+
+- name: Update config etc/spamassassin/local.cf
+  template: src=etc/spamassassin/local.cf.j2 dest=/etc/spamassassin/local.cf
+
+
+- name: restart spamassassin
+  service: name=spamassassin state=restarted

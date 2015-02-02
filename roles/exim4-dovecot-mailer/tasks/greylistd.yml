@@ -1,0 +1,11 @@
+---
+- name: install greylistd
+  apt: pkg=greylistd state=installed
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
+
+- name: Enable greylistd in exim4-config
+  command: "greylistd-setup-exim4 -netmask=24 add"
+

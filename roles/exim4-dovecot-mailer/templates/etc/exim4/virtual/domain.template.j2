@@ -1,0 +1,5 @@
+# {{ managed_by_ansible }}
+
+{% for alias in {{ item.aliases }} %}  
+{{ alias }}  
+{% endfor %}

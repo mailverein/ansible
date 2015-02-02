@@ -1,0 +1,8 @@
+- include_vars: mail-accounts.yml
+
+- name: crate mail-accounts
+  template: 
+    src=foo.j2
+    dest=bar-{{ item }}.cfg
+  with_items:
+    - "{{ systemaccounts }}"

@@ -1,0 +1,20 @@
+---
+# include all aliases
+- include_vars: aliases/*.yml
+
+#- include_vars: "{{ item }}.yml"
+#  with_fileglob: "../vars/aliases/*.yml"
+
+#- include_vars: "{{ item }}"
+#  with_fileglob:
+#    - ../vars/*.yml
+
+- name: Create exim4-aliases-directory
+  file: path=/etc/exim4/virtual state=directory
+
+- name: Create alias-files
+  template: 
+    src=etc/exim4/virtual/domain.template.j2
+    dest=/etc/exim4/virtual/{{item.name}}.cfg
+  with_items:
+    - "{{ mail_domain }}"

@@ -1,8 +1,10 @@
 ---
 # tasks file for exim4-dovecot-mailer
- - include: exim4.yml
- - include: spamassassin.yml
- - include: greylistd.yml
+- include: exim4.yml
+- include: spamassassin.yml
+- include: greylistd.yml
+- include: mail-aliases.yml
+- include: mail-accounts.yml
 
 - name: run gitmaintainer-commit
   shell: gitmaintainer commit -m "ansible-playbook exim4-dovecot-mailer completed"

@@ -1,8 +1,8 @@
 ---
 mail_domain:
-  name: mafia-server.net
-  aliases:
-    - root: mafia-server-net-fink
-    - postmaster: mafia-server-net-fink
-    - abuse : mafia-server-net-fink
-    - hostmaster : mafia-server-net-fink
+  - name: mafia-server.net
+    aliases:
+      - root: mafia-server-net-fink
+      - postmaster: mafia-server-net-fink
+      - abuse : mafia-server-net-fink
+      - hostmaster : mafia-server-net-fink

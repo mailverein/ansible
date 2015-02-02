@@ -5,23 +5,23 @@
 # (:,{,|,...)
 
 mail_domain:
-  name: my-pretty-domain.example.com
-  aliases:
-    - root: another-mailaccount
-	# deliver mail to the mailbox "another-mailaccount"
-    - postmaster: ":fail: harrharr"
-	# perm-reject mails with the message: "harrharr"
-    - abuse : ":blackhole:"
-	# blackhole messages (e.g. accept and delete)
-    - hostmaster: "|/some/command ${local_part}"
-	# pass the mail to "/some/command" with the localpart as argument
+  - name: my-pretty-domain.example.com
+    aliases:
+      - root: another-mailaccount
+  	# deliver mail to the mailbox "another-mailaccount"
+      - postmaster: ":fail: harrharr"
+  	# perm-reject mails with the message: "harrharr"
+      - abuse : ":blackhole:"
+  	# blackhole messages (e.g. accept and delete)
+      - hostmaster: "|/some/command ${local_part}"
+  	# pass the mail to "/some/command" with the localpart as argument
 
 
 # a clean version of the above, w/o comments:
 mail_domain:
-  name: my-pretty-domain.example.com
-  aliases:
-    - root: another-mailaccount
-    - postmaster: ":fail: harrharr"
-    - abuse: ":blackhole:"
-    - hostmaster: "|/some/command ${local_part}"
+  - name: my-pretty-domain.example.com
+    aliases:
+      - root: another-mailaccount
+      - postmaster: ":fail: harrharr"
+      - abuse: ":blackhole:"
+      - hostmaster: "|/some/command ${local_part}"

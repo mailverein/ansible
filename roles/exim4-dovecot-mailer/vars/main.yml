@@ -1,2 +1,5 @@
 ---
 # vars file for exim4-dovecot-mailer
+- include: aliases/{{ item }}
+  with_fileglob: ../vars/aliases/*.yml
+- include: mail-accounts.yml

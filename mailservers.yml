@@ -1,4 +1,5 @@
 - hosts: mailtest.docker.mafia-server.net
+  gather_facts: True
   roles:
     - essentials
     - exim4-dovecot-mailer

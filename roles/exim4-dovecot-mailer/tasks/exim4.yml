@@ -6,18 +6,9 @@
 
 - name: install exim4-daemon-heavy
   apt: pkg=exim4-daemon-heavy state=installed
-  environment:
-    GIT_AUTOCOMMIT: "true"
-    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
-    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
 
 - name: install spf-tools-perl
   apt: pkg=spf-tools-perl state=installed
-  environment:
-    GIT_AUTOCOMMIT: "true"
-    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
-    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
-
 
 - name: Update config etc/exim4/update-exim4.conf.conf
   template: src=etc/exim4/update-exim4.conf.conf.j2 dest=/etc/exim4/update-exim4.conf.conf

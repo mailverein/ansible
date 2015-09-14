@@ -6,3 +6,4 @@
     dest=bar-{{ item }}.cfg
   with_items:
     - "{{ systemaccounts }}"
+  register: do-gitmaintainer-commit

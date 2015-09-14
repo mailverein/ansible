@@ -11,6 +11,7 @@
 
 - name: Create exim4-aliases-directory
   file: path=/etc/exim4/virtual state=directory
+  register: do-gitmaintainer-commit
 
 - name: Create alias-files
   template: 
@@ -18,3 +19,4 @@
     dest=/etc/exim4/virtual/{{item.name}}.cfg
   with_items:
     - "{{ mail_domain }}"
+  register: do-gitmaintainer-commit

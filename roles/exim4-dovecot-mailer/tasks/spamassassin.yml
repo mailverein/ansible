@@ -8,9 +8,11 @@
 
 - name: Update config etc/default/spamassassin
   template: src=etc/default/spamassassin.j2 dest=/etc/default/spamassassin
+  register: do-gitmaintainer-commit
 
 - name: Update config etc/spamassassin/local.cf
   template: src=etc/spamassassin/local.cf.j2 dest=/etc/spamassassin/local.cf
+  register: do-gitmaintainer-commit
 
 
 - name: restart spamassassin

@@ -2,3 +2,6 @@
 # handlers file for exim4-dovecot-mailer
 - name: update exim4.conf
   shell: /usr/sbin/update-exim4.conf
+
+- name: update spamassassin.conf
+  shell: spamassassin --lint

@@ -12,8 +12,8 @@
 
 - name: Update config etc/spamassassin/local.cf
   template: src=etc/spamassassin/local.cf.j2 dest=/etc/spamassassin/local.cf
+  notify: update spamassassin.conf
   register: do-gitmaintainer-commit
-
 
 - name: restart spamassassin
   service: name=spamassassin state=restarted

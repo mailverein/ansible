@@ -12,21 +12,27 @@
 
 - name: Update config etc/exim4/update-exim4.conf.conf
   template: src=etc/exim4/update-exim4.conf.conf.j2 dest=/etc/exim4/update-exim4.conf.conf
+  notify: update exim4.conf
 
 - name: Update config etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases
   template: src=etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases.j2 dest=/etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases
+  notify: update exim4.conf
 
 - name: Update config etc/exim4/conf.d/acl/22_local-config_selective_dnsbl_greylist_deny
   template: src=etc/exim4/conf.d/acl/22_local-config_selective_dnsbl_greylist_deny.j2 dest=/etc/exim4/conf.d/acl/22_local-config_selective_dnsbl_greylist_deny
+  notify: update exim4.conf
 
 - name: Update config etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
   template: src=etc/exim4/conf.d/acl/30_exim4-config_check_rcpt.j2 dest=/etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
+  notify: update exim4.conf
 
 - name: Update config etc/exim4/conf.d/main/001_local_config
   template: src=etc/exim4/conf.d/main/001_local_config.j2 dest=/etc/exim4/conf.d/main/001_local_config
+  notify: update exim4.conf
 
 - name: Update config etc/exim4/conf.d/main/000_queue_only
   template: src=etc/exim4/conf.d/main/000_queue_only.j2 dest=/etc/exim4/conf.d/main/000_queue_only
+  notify: update exim4.conf
 
 - name: restart exim4
   service: name=exim4 state=restarted

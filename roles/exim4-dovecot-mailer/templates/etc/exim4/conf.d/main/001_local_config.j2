@@ -28,8 +28,8 @@ COURIER_AUTH = true
 
 # TLS config
 MAIN_TLS_ENABLE = true
-MAIN_TLS_CERTIFICATE = /etc/ssl/private/{{ssl_cert_name}}
-MAIN_TLS_PRIVATEKEY = /etc/ssl/private/{{ssl_key_name}}
+MAIN_TLS_CERTIFICATE = {{ exim_ssl_dir }}/{{ exim_ssl_cert_name }}
+MAIN_TLS_PRIVATEKEY = {{ exim_ssl_private_dir }}/{{ exim_ssl_key_name }}
 tls_on_connect_ports = 465
 gnutls_compat_mode = true
 

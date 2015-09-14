@@ -1,2 +1,8 @@
 ---
 # vars file for exim4-dovecot-mailer
+
+
+exim_ssl_dir: /etc/ssl
+exim_ssl_private_dir: /etc/ssl/private
+exim_ssl_cert_name: exim.pem
+exim_ssl_key_name: exim.key

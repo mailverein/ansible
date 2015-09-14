@@ -4,15 +4,15 @@
 mail_domains:
   - name: example.com
     aliases:
-      # forward to another e-mail-address
-      - www: alima@example.org
-  	  # deliver mail to the mailbox "another-mailaccount"
+#      # forward to another e-mail-address
+      - www: "alima@example.org"
+#  	  # deliver mail to the mailbox "another-mailaccount"
       - root: another-mailaccount
-  	  # perm-reject mails with the message: "harrharr"
+#  	  # perm-reject mails with the message: "harrharr"
       - postmaster: ":fail: harrharr"
-  	  # blackhole messages (e.g. accept and delete)
+#  	  # blackhole messages (e.g. accept and delete)
       - abuse : ":blackhole:"
-  	  # pass the mail to "/some/command" with the localpart as argument
+#  	  # pass the mail to "/some/command" with the localpart as argument
       - hostmaster: "|/some/command ${local_part}"
 
 exim4_dc_eximconfig_configtype: local

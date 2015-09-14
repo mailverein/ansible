@@ -1,5 +1,9 @@
-- hosts: mailtest.docker.mafia-server.net
+- hosts: localhost
   gather_facts: True
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
   roles:
     - essentials
     - exim4-dovecot-mailer

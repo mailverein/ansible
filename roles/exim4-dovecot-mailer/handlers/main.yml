@@ -3,5 +3,18 @@
 - name: update exim4.conf
   shell: /usr/sbin/update-exim4.conf
 
-- name: update spamassassin.conf
+- name: restart exim4
+  service: name=exim4 state=restarted
+
+- name: check spamassassin.conf
   shell: spamassassin --lint
+
+- name: restart spamassassin
+  service: name=spamassassin state=restarted
+
+- name: gitmaintainer commit
+  shell: 'gitmaintainer commit -m "ansible: exim4-dovecot-mailer"'
+  environment:
+    GIT_AUTOCOMMIT: "true"
+    GIT_COMMITTER_NAME: "ansible on {{ lookup('pipe','hostname -f') }}"
+    GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"

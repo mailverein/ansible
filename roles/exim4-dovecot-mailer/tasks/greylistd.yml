@@ -4,5 +4,8 @@
 
 - name: Enable greylistd in exim4-config
   command: "greylistd-setup-exim4 -netmask=24 add"
-  register: do-gitmaintainer-commit
-
+  register: output
+  failed_when: "'Error' in output.stderr"
+  notify:
+    - gitmaintainer commit
+    - restart exim4

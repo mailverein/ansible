@@ -1,0 +1,21 @@
+BEGIN TRANSACTION;
+
+INSERT INTO "domains" VALUES(1,'brakhane.net',1);
+INSERT INTO "domains" VALUES(2,'brakhane.org',1);
+INSERT INTO "domains" VALUES(3,'anjaroot.net',1);
+INSERT INTO "domains" VALUES(4,'failedprojects.de',1);
+INSERT INTO "domains" VALUES(5,'lpconnection.net',1);
+
+INSERT INTO "aliases" VALUES(1,'simon',1,1,1);
+INSERT INTO "aliases" VALUES(2,'simon',1,2,1);
+INSERT INTO "aliases" VALUES(3,'simon',1,3,1);
+INSERT INTO "aliases" VALUES(4,'simon',1,4,1);
+INSERT INTO "aliases" VALUES(5,'simon',1,5,1);
+INSERT INTO "aliases" VALUES(6,'postmaster',1,1,1);
+INSERT INTO "aliases" VALUES(7,'postmaster',1,2,1);
+INSERT INTO "aliases" VALUES(8,'postmaster',1,3,1);
+INSERT INTO "aliases" VALUES(9,'postmaster',1,4,1);
+INSERT INTO "aliases" VALUES(10,'postmaster',1,5,1);
+
+INSERT INTO "mailboxes" VALUES(1,'simon','{SSHA256}Km3HV6WRSSaQNUyS0XQvwn7U3dypVMi9nsHZqmgahow+kYni',1);
+COMMIT;

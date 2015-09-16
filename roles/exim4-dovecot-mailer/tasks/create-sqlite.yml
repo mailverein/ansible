@@ -1,0 +1,17 @@
+---
+# create and fill? the sqlite-database
+
+- name: Create sqlite-directorys
+  file: path=/usr/local/share/mail state=directory
+
+- name: update init-clean.sqlite
+  synchronize: src={{ sqlite_init_file }} dest=/usr/local/share/mail/init-clean.sqlite
+
+- name: update user sql-file
+  synchronize: src={{ sqlite_user_file }} dest=/usr/local/share/mail/user.sqlite
+
+- name: initialize database
+  shell: sqlite3 /usr/local/share/mail/db.sqlite < /usr/local/share/mail/init-clean.sqlite
+
+- name: fill database with user-data
+  shell: sqlite3 /usr/local/share/mail/db.sqlite < /usr/local/share/mail/user.sqlite

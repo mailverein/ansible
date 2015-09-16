@@ -1,0 +1,11 @@
+PRAGMA writable_schema = 1;
+delete from sqlite_master where type in ('table', 'index', 'trigger');
+PRAGMA writable_schema = 0;
+VACUUM;
+PRAGMA INTEGRITY_CHECK;
+
+BEGIN TRANSACTION;
+CREATE TABLE domains (id INTEGER PRIMARY KEY NOT NULL, fqdn VARCHAR(256) NOT NULL, enabled INT NOT NULL CHECK(enabled IN (0,1)));
+CREATE TABLE aliases (id INTEGER PRIMARY KEY NOT NULL, localpart VARCHAR(256) NOT NULL, mailboxid INTEGER NOT NULL, domainid INTEGER NOT NULL, enabled INTEGER NOT NULL CHECK (enabled IN (0,1)), FOREIGN KEY(mailboxid) REFERENCES mailboxes(id), FOREIGN KEY(domainid) REFERENCES domain(id));
+CREATE TABLE "mailboxes" (id INTEGER PRIMARY KEY NOT NULL, name VARCHAR(256) NOT NULL, password VARCHAR(256) NOT NULL, enabled INTEGER NOT NULL CHECK (enabled IN (0,1)));
+COMMIT;

@@ -12,7 +12,10 @@
     GIT_AUTOCOMMIT: "true"
     GIT_COMMITTER_NAME: "ansible on {{lookup('pipe','hostname -f')}}"
     GIT_COMMITTER_EMAIL: "ansible@{{ lookup('pipe','hostname -f') }}"
-  when: do-gitmaintainer-commit
+  register: output
+  failed_when: "'Error' in output.stderr"
+  
+#  when: do-gitmaintainer-commit
 #- name: Update configfile update-exim4.conf.conf
 #  template: src=etc/exim4/update-exim4.conf.conf.j2 dest=/etc/exim4/update-exim4.conf.conf
 #  tags: [exim]

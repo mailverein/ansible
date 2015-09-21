@@ -1,0 +1,60 @@
+{% raw %}
+# whitelist in front of greylisting and everything
+accept
+    condition = ${lookup{$local_part@$domain}lsearch{/etc/exim4/local_recipient_whitelist}{true}{false}}
+    log_message = recipient is whitelisted
+
+.ifndef BROKEN_MIME_OK
+# Reject messages with serious MIME container errors
+deny
+      message = Found MIME error ($demime_reason).
+      log_message = "Broken MIME container $demime_reason"
+      demime = *
+      condition = ${if >{$demime_errorlevel}{2}{1}{0}}
+.endif
+
+.ifdef MIME_FORBIDDEN_EXTENSION
+# Reject known virus spreading file extensions.
+# Accepting these is pretty much braindead.
+deny  message = contains $found_extension file (blacklisted).
+      demime  = MIME_FORBIDDEN_EXTENSION
+
+.endif
+
+# reject viruses
+deny
+     message = This message contains a virus ($malware_name)
+     condition = ${if and {{< {$message_size}{SPAM_SCAN_MAX_SIZE}}\
+                          {and {{eq {${lookup{$sender_address}lsearch*@{CONFDIR/local_sender_whitelist_spam}{0}{1}}}{1}}\
+                                {eq {${lookup{$sender_host_address}lsearch*@{CONFDIR/local_sender_whitelist_spam}{0}{1}}}{1}}}}\
+                          }{1}{0}}
+     demime = *
+     malware = *
+
+# reject spam at high scores
+deny
+     condition = ${if and {{< {$message_size}{SPAM_SCAN_MAX_SIZE}}\
+                          {and {{eq {${lookup{$sender_address}lsearch*@{CONFDIR/local_sender_whitelist_spam}{0}{1}}}{1}}\
+                                {eq {${lookup{$sender_host_address}lsearch*@{CONFDIR/local_sender_whitelist_spam}{0}{1}}}{1}}}}\
+                          }{1}{0}}
+     message = This message scored $spam_score spam points.
+     spam = Debian-exim:true
+     condition = ${if >{$spam_score_int}{SPAM_REJECT_LEVEL}{1}{0}}
+
+# add spam-flag/-report header if score is over threshold
+# (subject will be prefixed with *SPAM* by CONFDIR/rewrite-spam-subject)
+warn
+     condition = ${if and {{< {$message_size}{SPAM_SCAN_MAX_SIZE}}\
+                          {and {{eq {${lookup{$sender_address}lsearch*@{CONFDIR/local_sender_whitelist_spam}{0}{1}}}{1}}\
+                                {eq {${lookup{$sender_host_address}lsearch*@{CONFDIR/local_sender_whitelist_spam}{0}{1}}}{1}}}}\
+                          }{1}{0}}
+     spam = Debian-exim:true
+     condition = ${if >{$spam_score_int}{SPAM_MARK_LEVEL}{1}{0}}
+     add_header = X-Spam-Flag: YES
+     add_header = X-Spam-Report: $spam_report
+
+# put headers in all messages (no matter if spam or not)
+warn  spam = Debian-exim:true
+      add_header = X-Spam-Score: $spam_score ($spam_bar)
+
+{% endraw %}

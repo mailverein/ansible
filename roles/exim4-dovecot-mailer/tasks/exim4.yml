@@ -75,3 +75,10 @@
     - update exim4.conf
     - restart exim4
     - gitmaintainer commit
+
+- name: Update config etc/exim4/conf.d/router/900_local-sql-user
+  template: src=etc/exim4/conf.d/router/900_local-sql-user.j2 dest=/etc/exim4/conf.d/router/900_local-sql-user
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit

@@ -76,8 +76,22 @@
     - restart exim4
     - gitmaintainer commit
 
-- name: Update config etc/exim4/conf.d/router/900_local-sql-user
-  template: src=etc/exim4/conf.d/router/900_local-sql-user.j2 dest=/etc/exim4/conf.d/router/900_local-sql-user
+- name: Update config etc/exim4/conf.d/router/899_local-user-suffix-rewrite
+  template: src=etc/exim4/conf.d/router/899_local-user-suffix-rewrite.j2 dest=/etc/exim4/conf.d/router/899_local-user-suffix-rewrite
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit
+
+- name: Update config etc/exim4/conf.d/router/900_exim4-config_local_user
+  template: src=etc/exim4/conf.d/router/900_exim4-config_local_user.j2 dest=/etc/exim4/conf.d/router/900_exim4-config_local_user
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit
+
+- name: Update config etc/exim4/conf.d/router/901_local-user-vmail
+  template: src=etc/exim4/conf.d/router/901_local-user-vmail.j2 dest=/etc/exim4/conf.d/router/901_local-user-vmail
   notify:
     - update exim4.conf
     - restart exim4

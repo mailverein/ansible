@@ -1,0 +1,19 @@
+{% raw %}
+local_user_sufix_rewrite:
+  debug_print = "R: local_user_rewrite for $local_part@$domain"
+  driver = redirect
+  domains = +virtual_domains
+  local_part_suffix = +* : -*
+  local_part_suffix_optional
+  headers_remove = X-local-part-suffix
+  headers_add = X-local-part-suffix: ${original_local_part}
+  allow_fail
+  allow_defer
+  data = ${lookup sqlite{CONFIGDB \
+    SELECT a.localpart || "@" || d.fqdn FROM aliases AS a, \
+    domains AS d WHERE d.fqdn="${quote_sqlite:$domain}" AND \
+    a.localpart="${quote_sqlite:$local_part}" AND \
+    a.domainid = d.id AND a.enabled=1 AND d.enabled=1}}
+  cannot_route_message = Unknown user
+
+{% endraw %}

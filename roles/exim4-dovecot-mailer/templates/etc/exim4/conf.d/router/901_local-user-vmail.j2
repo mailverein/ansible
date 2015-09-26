@@ -1,0 +1,14 @@
+{% raw %}
+local_user_vmail:
+  debug_print = "R: local_user_vmail for $local_part@$domain"
+  driver = accept
+  domains = +virtual_domains
+  local_parts = ! root
+  transport = dovecot_lmtp
+  condition = ${lookup sqlite{CONFIGDB \
+    SELECT 1 FROM aliases AS a, domains AS d WHERE \
+    d.fqdn="${quote_sqlite:$domain}" AND \
+    a.localpart="${quote_sqlite:$local_part}" AND \
+    a.domainid = d.id AND a.enabled=1 AND d.enabled=1}}
+  cannot_route_message = Unknown user
+{% endraw %}

@@ -1,0 +1,74 @@
+---
+- name: install dovecot-imapd
+  apt: pkg=dovecot-sqlite state=installed
+
+- name: install dovecot-sqlite
+  apt: pkg=dovecot-sqlite state=installed
+
+- name: install dovecot-lmtpd
+  apt: pkg=dovecot-lmtpd state=installed
+
+- name: install dovecot-sieve
+  apt: pkg=dovecot-sieve state=installed
+
+- name: Update config etc/dovecot/dovecot-sql.conf.ext
+  template: src=etc/dovecot/dovecot-sql.conf.ext.j2 dest=/etc/dovecot/dovecot-sql.conf.ext
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+- name: Update config etc/dovecot/conf.d/10-auth.conf
+  template: src=etc/dovecot/conf.d/10-auth.conf.j2 dest=/etc/dovecot/conf.d/10-auth.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+- name: Update config etc/dovecot/conf.d/10-logging.conf
+  template: src=etc/dovecot/conf.d/10-logging.conf.j2 dest=/etc/dovecot/conf.d/10-logging.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+- name: Update config etc/dovecot/conf.d/10-mail.conf
+  template: src=etc/dovecot/conf.d/10-mail.conf.j2 dest=/etc/dovecot/conf.d/10-mail.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+- name: Update config etc/dovecot/conf.d/10-master.conf
+  template: src=etc/dovecot/conf.d/10-master.conf.j2 dest=/etc/dovecot/conf.d/10-master.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+- name: Update config etc/dovecot/conf.d/10-ssl.conf
+  template: src=etc/dovecot/conf.d/10-ssl.conf.j2 dest=/etc/dovecot/conf.d/10-ssl.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+# not used atm; prepared if we have to change hostmaster-address
+#- name: Update config etc/dovecot/conf.d/15-lda.conf
+#  template: src=etc/dovecot/conf.d/15-lda.conf.j2 dest=/etc/dovecot/conf.d/15-lda.conf
+#  notify:
+#    - check dovecot-config
+#    - restart dovecot
+#    - gitmaintainer commit
+
+- name: Update config etc/dovecot/conf.d/auth-sql.conf.ext
+  template: src=etc/dovecot/conf.d/auth-sql.conf.ext.j2 dest=/etc/dovecot/conf.d/auth-sql.conf.ext
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
+- name: update ssl-cert
+  synchronize: src={{ local_ssl_cert }} dest={{ dovecot_ssl_cert }}
+
+- name: set ssl-cert permissions
+  file: path={{ dovecot_ssl_cert }} state=file mode="u=r,g=r,o=r"
+
+- name: update ssl-key
+  synchronize: src={{ local_ssl_privkey }} dest={{ dovecot_ssl_privkey }}
+
+- name: set ssl-key permissions
+  file: path={{ dovecot_ssl_privkey }} state=file mode="u=r,g=r,o="

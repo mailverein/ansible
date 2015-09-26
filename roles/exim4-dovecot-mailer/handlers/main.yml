@@ -12,6 +12,9 @@
 - name: restart spamassassin
   service: name=spamassassin state=restarted
 
+- name: restart dovecot
+  service: name=dovecot state=restarted
+
 - name: gitmaintainer commit
   shell: 'gitmaintainer commit -m "ansible: exim4-dovecot-mailer"'
   environment:

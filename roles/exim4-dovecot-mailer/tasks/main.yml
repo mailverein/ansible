@@ -4,6 +4,7 @@
 - include: spamassassin.yml
 - include: greylistd.yml
 - include: create-sqlite.yml
+- include: dovecot.yml
 #- include: mail-aliases.yml
 #- include: mail-accounts.yml
 

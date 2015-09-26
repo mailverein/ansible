@@ -18,12 +18,12 @@
     - restart exim4
     - gitmaintainer commit
 
-- name: Update config etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases
-  template: src=etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases.j2 dest=/etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases
-  notify:
-    - update exim4.conf
-    - restart exim4
-    - gitmaintainer commit
+#- name: Update config etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases
+#  template: src=etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases.j2 dest=/etc/exim4/conf.d/router/350_mafia-server-config_vdom_aliases
+#  notify:
+#    - update exim4.conf
+#    - restart exim4
+#    - gitmaintainer commit
 
 - name: Update config etc/exim4/conf.d/acl/22_local-config_selective_dnsbl_greylist_deny
   template: src=etc/exim4/conf.d/acl/22_local-config_selective_dnsbl_greylist_deny.j2 dest=/etc/exim4/conf.d/acl/22_local-config_selective_dnsbl_greylist_deny
@@ -92,6 +92,13 @@
 
 - name: Update config etc/exim4/conf.d/router/901_local-user-vmail
   template: src=etc/exim4/conf.d/router/901_local-user-vmail.j2 dest=/etc/exim4/conf.d/router/901_local-user-vmail
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit
+
+- name: Update config etc/exim4/conf.d/transport/40_local-dovecot-lmtp
+  template: src=etc/exim4/conf.d/transport/40_local-dovecot-lmtp.j2 dest=/etc/exim4/conf.d/transport/40_local-dovecot-lmtp
   notify:
     - update exim4.conf
     - restart exim4

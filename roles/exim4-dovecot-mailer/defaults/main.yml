@@ -16,7 +16,8 @@ mail_domains:
       - hostmaster: "|/some/command ${local_part}"
 
 exim4_dc_eximconfig_configtype: internet
-exim4_dc_other_hostnames: "{{ ansible_hostname }}"
+# FIXME amke this dynamic!
+exim4_dc_other_hostnames: "brakhane.net : brakhane.org : anjaroot.net : failedprojects.de : lpconnection.net"
 exim4_dc_local_interfaces: '127.0.0.1 ; ::1'
 exim4_dc_readhost: ''
 exim4_dc_relay_domains: ''

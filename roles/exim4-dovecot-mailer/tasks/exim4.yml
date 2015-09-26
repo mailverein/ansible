@@ -68,3 +68,10 @@
     - update exim4.conf
     - restart exim4
     - gitmaintainer commit
+
+- name: Update config etc/exim4/conf.d/main/002_local-sql
+  template: src=etc/exim4/conf.d/main/002_local-sql.j2 dest=/etc/exim4/conf.d/main/002_local-sql
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit

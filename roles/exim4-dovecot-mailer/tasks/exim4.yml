@@ -103,3 +103,10 @@
     - update exim4.conf
     - restart exim4
     - gitmaintainer commit
+
+- name: make sure optional exim-configs exist
+  # FIXME make this a template, filled from configs or sqlite
+  file: path=/etc/exim4/local_recipient_whitelist state=touch mode="u=rw,g=r,o=r"
+  file: path=/etc/exim4/local_sender_whitelist_spam state=touch mode="u=rw,g=r,o=r"
+  notify:
+    - gitmaintainer commit

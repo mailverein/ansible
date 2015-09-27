@@ -5,6 +5,7 @@
 - include: greylistd.yml
 - include: create-sqlite.yml
 - include: dovecot.yml
+- include: clamav.yml
 #- include: mail-aliases.yml
 #- include: mail-accounts.yml
 

@@ -47,6 +47,8 @@ dovecot_ssl_ciphers: '!SSLv2 !SSLv3'
 dovecot_ssl_cipher_list: 'AES128+EECDH:AES128+EDH'
 dovecot_ssl_prefer_server_ciphers: 'yes'
 
+clamd_usigs_reload_dbs: 'yes'
+
 sqlite_init_file: 'files/sqlite/init-clean.sqlite'
 sqlite_user_file: 'files/sqlite/user.sqlite'
 

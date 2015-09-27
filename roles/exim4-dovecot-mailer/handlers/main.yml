@@ -15,6 +15,9 @@
 - name: restart dovecot
   service: name=dovecot state=restarted
 
+- name: restart clamd
+  service: name=clamav-daemon.service state=restarted
+
 - name: gitmaintainer commit
   shell: 'gitmaintainer commit -m "ansible: exim4-dovecot-mailer"'
   environment:

@@ -1,0 +1,23 @@
+---
+- name: install clamav-daemon
+  apt: pkg=clamav-daemon state=installed
+
+- name: install clamav-unofficial-sigs
+  apt: pkg=clamav-unofficial-sigs state=installed
+
+- name: Update config etc/clamav-unofficial-sigs.conf.d/ansible.conf
+  template: src=etc/clamav-unofficial-sigs.conf.d/ansible.conf.j2 dest=/etc/clamav-unofficial-sigs.conf.d/ansible.conf
+  notify:
+    - gitmaintainer commit
+
+- name: Update config etc/clamav/clamd.conf
+  template: src=etc/clamav/clamd.conf.j2 dest=/etc/clamav/clamd.conf
+  notify:
+    - restart clamd
+    - gitmaintainer commit
+
+- name: add clamav-user to group Debian-Exim
+  user: name=clamav groups=Debian-exim append=yes
+  notify:
+    - restart clamd
+    - gitmaintainer commit

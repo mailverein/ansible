@@ -24,6 +24,12 @@
 - name: Ensure iftop is installed
   apt: name=iftop state=installed
 
+- name: Ensure swaks is installed
+  apt: name=swaks state=installed
+
+- name: Ensure mailutils is installed
+  apt: name=mailutils state=installed
+
 - name: Check if fox-meta is installed
   command: dpkg-query -W fox-meta
   register: deb_check_fox_meta

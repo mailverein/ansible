@@ -47,13 +47,11 @@
     - restart dovecot
     - gitmaintainer commit
 
-# not used atm; prepared if we have to change hostmaster-address
-#- name: Update config etc/dovecot/conf.d/15-lda.conf
-#  template: src=etc/dovecot/conf.d/15-lda.conf.j2 dest=/etc/dovecot/conf.d/15-lda.conf
-#  notify:
-#    - check dovecot-config
-#    - restart dovecot
-#    - gitmaintainer commit
+- name: Update config etc/dovecot/conf.d/15-lda.conf
+  template: src=etc/dovecot/conf.d/15-lda.conf.j2 dest=/etc/dovecot/conf.d/15-lda.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
 
 - name: Update config etc/dovecot/conf.d/auth-sql.conf.ext
   template: src=etc/dovecot/conf.d/auth-sql.conf.ext.j2 dest=/etc/dovecot/conf.d/auth-sql.conf.ext

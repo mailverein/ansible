@@ -6,6 +6,7 @@
 - include: create-sqlite.yml
 - include: dovecot.yml
 - include: clamav.yml
+- include: system.yml
 #- include: mail-aliases.yml
 #- include: mail-accounts.yml
 

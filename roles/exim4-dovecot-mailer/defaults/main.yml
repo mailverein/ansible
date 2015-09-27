@@ -46,6 +46,7 @@ dovecot_ssl_dhparam_length: '4096'
 dovecot_ssl_ciphers: '!SSLv2 !SSLv3'
 dovecot_ssl_cipher_list: 'AES128+EECDH:AES128+EDH'
 dovecot_ssl_prefer_server_ciphers: 'yes'
+dovecot_postmaster_address: 'postmaster@%d'
 
 clamd_usigs_reload_dbs: 'yes'
 

@@ -1,0 +1,6 @@
+---
+- name: ensure vmail-group exists
+  group: name=vmail system=yes state=present
+
+- name: ensure vmail-user exists
+  user: name=vmail comment="user with all maildirs" system=yes groups=vmail home=/var/vmail append=no state=present

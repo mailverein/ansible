@@ -1,17 +1,28 @@
 ---
+- name: install sqlite3
+  apt: pkg=sqlite3 state=installed
+
 # create and fill? the sqlite-database
 
 - name: Create sqlite-directorys
   file: path=/usr/local/share/mail state=directory
 
+- name: test if sqlite-database is in use
+  stat: /usr/local/share/mail/prod.lock
+  register: sqlite_prod_state
+
 - name: update init-clean.sqlite
   synchronize: src={{ sqlite_init_file }} dest=/usr/local/share/mail/init-clean.sqlite
+  when: sqlite_prod_state.stat.exists == False
 
 - name: update user sql-file
   synchronize: src={{ sqlite_user_file }} dest=/usr/local/share/mail/user.sqlite
+  when: sqlite_prod_state.stat.exists == False
 
 - name: initialize database
   shell: sqlite3 /usr/local/share/mail/db.sqlite < /usr/local/share/mail/init-clean.sqlite
+  when: sqlite_prod_state.stat.exists == False
 
 - name: fill database with user-data
   shell: sqlite3 /usr/local/share/mail/db.sqlite < /usr/local/share/mail/user.sqlite
+  when: sqlite_prod_state.stat.exists == False

@@ -95,19 +95,19 @@
     - restart exim4
     - gitmaintainer commit
 
-- name: Update config etc/exim4/conf.d/router/900_exim4-config_local_user
-  template: src=etc/exim4/conf.d/router/900_exim4-config_local_user.j2 dest=/etc/exim4/conf.d/router/900_exim4-config_local_user
-  notify:
-    - update exim4.conf
-    - restart exim4
-    - gitmaintainer commit
+#- name: Update config etc/exim4/conf.d/router/900_exim4-config_local_user
+#  template: src=etc/exim4/conf.d/router/900_exim4-config_local_user.j2 dest=/etc/exim4/conf.d/router/900_exim4-config_local_user
+#  notify:
+#    - update exim4.conf
+#    - restart exim4
+#    - gitmaintainer commit
 
-- name: Update config etc/exim4/conf.d/router/901_local-user-vmail
-  template: src=etc/exim4/conf.d/router/901_local-user-vmail.j2 dest=/etc/exim4/conf.d/router/901_local-user-vmail
-  notify:
-    - update exim4.conf
-    - restart exim4
-    - gitmaintainer commit
+#- name: Update config etc/exim4/conf.d/router/901_local-user-vmail
+#  template: src=etc/exim4/conf.d/router/901_local-user-vmail.j2 dest=/etc/exim4/conf.d/router/901_local-user-vmail
+#  notify:
+#    - update exim4.conf
+#    - restart exim4
+#    - gitmaintainer commit
 
 - name: Update config etc/exim4/conf.d/transport/40_local-dovecot-lmtp
   template: src=etc/exim4/conf.d/transport/40_local-dovecot-lmtp.j2 dest=/etc/exim4/conf.d/transport/40_local-dovecot-lmtp

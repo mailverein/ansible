@@ -83,7 +83,7 @@ sqlite_user_condition:
                           }\
                           }
   local_part_suffix     = #*
-  transport             = local_mysql_delivery
+  transport             = dovecot_lmtp
 
 
 # 2006-09-07        virtual user in sqlite-db? (note: it's not nessessary to return real data)
@@ -100,7 +100,7 @@ sqlite_user:
                           }{true}{false}}
   local_part_suffix     = +*
   local_part_suffix_optional
-  transport             = local_mysql_delivery
+  transport             = dovecot_lmtp
   no_more
 
 # 2007-01-16        catchall domains

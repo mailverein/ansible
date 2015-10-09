@@ -1,0 +1,123 @@
+{% raw %}
+# an alias can be specified by giving one or more db-entries that match username and domain,
+# or return a comma-seperated list of recipients.
+# when no domain is specified in db-entry, recipients are taken from all domains with a matching username
+# setting internal='YES' only allows sending mail to this alias, if authenticated (for internal usage)
+sqlite_alias:
+  driver                = redirect
+  # restriction to local domains only may be a double check, as data takes care of it already ;-)
+  domains               = +local_domains
+  file_transport        = address_file
+  pipe_transport        = address_pipe
+  data                  = ${if or {{\
+                                def:authenticated_id\
+                          }{\
+                                eq {$sender_host_address}{127.0.0.1}\
+                          }}{\
+                                ${lookup sqlite{CONFIGDB \
+                                        SELECT sendto \
+                                        FROM alias \
+                                        WHERE ( username='${quote_sqlite:$local_part}' \
+                                        AND (domain='${quote_sqlite:$domain}' OR domain='') )}}\
+                          } {\
+                                ${lookup sqlite{CONFIGDB \
+                                        SELECT sendto \
+                                        FROM alias \
+                                        WHERE ( ( username='${quote_sqlite:$local_part}' AND (domain='${quote_sqlite:$domain}' OR domain='') ) \
+                                        AND internal='NO' )}}\
+                          }}
+  local_part_suffix     = +*
+  local_part_suffix_optional
+
+# 2006-10-03 
+# virtual user in sqlite-db? and suffixed with a condition?
+# currently supported:
+#       #before#@                  e.g.: pille#before#20061003@struction.de will accept mail for existing user pille@struction.de, if current date is before 20061003
+#       #fromdomain#@          e.g.: pille#fromdomain#example.com@struction.de will accept mail for existing user pille@struction.de, if current domain of sender is example.com
+sqlite_user_condition:
+  driver                = accept
+  # restriction to local domains only may be a double check, as the condition takes care of it already ;-)
+  domains               = +local_domains
+  # 2006-10-08 
+  # as we embed base64 encoded strings in local_part_suffix, and these are case sensitive, we must take care of them.
+  # NOTE: this results in the missing feature, that conditional-mails in this router are case-sensitive! (pille#...#...@struction.de != Pille#...#...@struction.de)
+  caseful_local_part    = true
+  condition             = ${if and {{\
+                                        # existing user
+                                        eq {${lookup sqlite{CONFIGDB \
+                                                SELECT CONCAT(username,'@',domain) AS email \
+                                                FROM user \
+                                                WHERE username='${quote_sqlite:$local_part}' \
+                                                AND domain='${quote_sqlite:$domain}' \
+                                                AND SMTP_allowed='YES' \
+                                        }{true}{false}}}{true}\
+                                   }{\
+                                        # different conditions
+                                        or {{\
+                                                # suffix contains #before# and date (yyyymmdd) is not yet #before#yyyymmdd
+                                                and {{\
+                                                        eq {${sg{$local_part_suffix}{^#([^#]+)#[0-9]\{8\}\$}{\$1}}}{before}\
+                                                }{\
+                                                        lt {$tod_logfile}{${sg{$local_part_suffix}{^#[^#]+#([0-9]\{8\})\$}{\$1}}}\
+                                                }\
+                                           }\
+                                           }{\
+                                                # suffix contains #fromdomain# and the domain-name of sender
+                                                and {{\
+                                                        eq {${sg{$local_part_suffix}{^#([^#]+)#.*\$}{\$1}}}{fromdomain}\
+                                                    }{\
+                                                        eq {$sender_address_domain}{${sg{$local_part_suffix}{^#[^#]+#(.*)\$}{\$1}}}\
+                                                    }\
+                                                }\
+                                           }{\
+                                                # suffix contains #b64from# and the base64 encoded address of sender    DOES NOT WORK YET!
+                                                and {{\
+                                                        eq {${sg{$local_part_suffix}{^#([^#]+)#.*\$}{\$1}}}{b64from}\
+                                                    }{\
+                                                        eq {${str2b64:$sender_address}}{${sg{$local_part_suffix}{^#[^#]+#(.*)\$}{\$1}}}\
+                                                    }\
+                                                }\
+                                           }\
+                                        }\
+                                   }\
+                          }\
+                          }
+  local_part_suffix     = #*
+  transport             = local_mysql_delivery
+
+
+# 2006-09-07        virtual user in sqlite-db? (note: it's not nessessary to return real data)
+sqlite_user:
+  driver                = accept
+  # restriction to local domains only may be a double check, as the condition takes care of it already ;-)
+  domains               = +local_domains
+  condition             = ${lookup sqlite{CONFIGDB \
+                                SELECT CONCAT(username,'@',domain) AS email \
+                                FROM user \
+                                WHERE username='${quote_sqlite:$local_part}' \
+                                AND domain='${quote_sqlite:$domain}' \
+                                AND SMTP_allowed='YES' \
+                          }{true}{false}}
+  local_part_suffix     = +*
+  local_part_suffix_optional
+  transport             = local_mysql_delivery
+  no_more
+
+# 2007-01-16        catchall domains
+# a catchall domain can be specified by giving one or more db-entries that match the domain,
+# or return a comma-seperated list of recipients.
+# this router acts as a fallback, so it has to be placed below all routers that react on 'users'.
+# any mail to a not otherwise (in another router above) defined local_prefix in these domains are forwarded.
+# so keep in mind that this mostly may forward unsolicited mail and should not be used at all ;-)
+sqlite_catchall:
+  driver                = redirect
+  # restriction to local domains only may be a double check, as data takes care of it already ;-)
+  domains               = +local_domains
+  file_transport        = address_file
+  pipe_transport        = address_pipe
+  data                  = ${lookup sqlite{CONFIGDB \
+                                SELECT sendto \
+                                FROM catchall \
+                                WHERE domain='${quote_sqlite:$domain}' \
+                          }}
+{% endraw %}

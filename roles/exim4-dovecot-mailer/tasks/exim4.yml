@@ -81,6 +81,13 @@
     - restart exim4
     - gitmaintainer commit
 
+- name: Update config etc/exim4/conf.d/router/210_local-sqlite
+  template: src=etc/exim4/conf.d/router/210_local-sqlite.j2 dest=/etc/exim4/conf.d/router/210_local-sqlite
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit
+
 - name: Update config etc/exim4/conf.d/router/899_local-user-suffix-rewrite
   template: src=etc/exim4/conf.d/router/899_local-user-suffix-rewrite.j2 dest=/etc/exim4/conf.d/router/899_local-user-suffix-rewrite
   notify:

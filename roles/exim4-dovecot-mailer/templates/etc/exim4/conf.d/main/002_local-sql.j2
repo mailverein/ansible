@@ -1,6 +1,11 @@
 {% raw %}
 CONFIGDB = /usr/local/share/mail/db.sqlite
 
-domainlist virtual_domains = ${tr {${lookup sqlite{CONFIGDB \
-    SELECT fqdn FROM domains WHERE enabled = 1}}} {"\n"} {:}}
+domainlist local_domains = ${lookup sqlite { CONFIGDB\
+            SELECT domain FROM user WHERE domain='${quote_sqlite:$domain}' \
+                  UNION \
+            SELECT domain FROM alias WHERE domain='${quote_sqlite:$domain}' \
+                  UNION \
+            SELECT domain FROM catchall WHERE domain='${quote_sqlite:$domain}'\
+         }}
 {% endraw %}

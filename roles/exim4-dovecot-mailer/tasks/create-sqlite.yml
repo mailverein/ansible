@@ -8,7 +8,7 @@
   file: path=/usr/local/share/mail state=directory
 
 - name: test if sqlite-database is in use
-  stat: /usr/local/share/mail/prod.lock
+  stat: path=/usr/local/share/mail/prod.lock
   register: sqlite_prod_state
 
 - name: update init-clean.sqlite

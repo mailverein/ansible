@@ -17,8 +17,12 @@ CHECK_RCPT_REMOTE_LOCALPARTS = ^[./|] : ^.*[@%!\'`#?] : ^.*/\\.\\./
 # use exim internal scanner and disable amavis
 CHECK_DATA_LOCAL_ACL_FILE = CONFDIR/data-check-scan-acl
 
-## recipient callout
-#CHECK_RCPT_LOCAL_ACL_FILE = CONFDIR/recipient-callout-acl
+# recipient callout
+CHECK_RCPT_LOCAL_ACL_FILE = CONFDIR/local-rcpt-acl
+# do a callout to verify that the senders' address exists
+ENABLE_VERIFY_SENDER_CALLOUT = {{ exim4_enable_verify_sender_callout }}
+## use senders' address for RCPT-callout
+#CHECK_RCPT_LOCAL_ACL_USE_SENDER = false
 
 # enable authentication using courier auth daemon
 COURIER_AUTH = true

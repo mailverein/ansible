@@ -1,0 +1,26 @@
+# Ask inner/secondary mail servers for their users. 
+# Activate via CHECK_RCPT_LOCAL_ACL_FILE = CONFDIR/recipient-callout-acl
+#
+# This should block even more spam recipients unknown to these servers.
+# Use CHECK_RCPT_LOCAL_ACL_USE_SENDER = yes, to use the sender instead of <>
+#
+
+.ifdef ENABLE_VERIFY_SENDER_CALLOUT
+warn  message   = X-Sender-Verify: FAILED ($sender_verify_failure)
+  log_message = Sender ($sender_address) could not be verified using callout: $acl_verify_message ($sender_verify_failure)
+  !verify   = sender/callout=10s,random
+  
+warn  message   = X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
+  verify    = sender/callout=10s,random
+.endif
+
+# rcpt-callout only needed if we use an "internal" mailserver and this server knows nothing about localparts
+# TODO: make configurable
+#deny
+#    #!acl = sender_local_deny_exceptions
+#    domains = +local_domains : +relay_to_domains
+#    .ifdef CHECK_RCPT_LOCAL_ACL_USE_SENDER
+#    !verify = recipient/callout=2m,use_sender,defer_ok
+#    .else
+#    !verify = recipient/callout=2m,defer_ok
+#    .endif

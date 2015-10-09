@@ -46,6 +46,12 @@
     - restart exim4
     - gitmaintainer commit
 
+- name: Update config etc/exim4/local-rcpt-acl
+  template: src=etc/exim4/local-rcpt-acl.j2 dest=/etc/exim4/local-rcpt-acl
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit
 
 - name: Update config etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
   template: src=etc/exim4/conf.d/acl/30_exim4-config_check_rcpt.j2 dest=/etc/exim4/conf.d/acl/30_exim4-config_check_rcpt

@@ -1,5 +1,7 @@
 {% raw %}
 dovecot_lmtp:
+   delivery_date_add
+   envelope_to_add
    driver = lmtp
    socket = /var/run/dovecot/lmtp
    #maximum number of deliveries per batch, default 1

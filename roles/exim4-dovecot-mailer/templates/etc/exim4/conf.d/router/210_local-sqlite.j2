@@ -45,11 +45,11 @@ sqlite_user_condition:
   condition             = ${if and {{\
                                         # existing user
                                         eq {${lookup sqlite{CONFIGDB \
-                                                SELECT CONCAT(username,'@',domain) AS email \
+                                                SELECT username || '@' || domain  AS email \
                                                 FROM mailboxes \
                                                 WHERE username='${quote_sqlite:$local_part}' \
                                                 AND domain='${quote_sqlite:$domain}' \
-                                                AND SMTP_allowed='YES' \
+                                                AND enabled=1 \
                                         }{true}{false}}}{true}\
                                    }{\
                                         # different conditions
@@ -92,11 +92,11 @@ sqlite_user:
   # restriction to local domains only may be a double check, as the condition takes care of it already ;-)
   domains               = +virtual_domains
   condition             = ${lookup sqlite{CONFIGDB \
-                                SELECT CONCAT(username,'@',domain) AS email \
+                                SELECT username || '@' || domain AS email \
                                 FROM mailboxes \
                                 WHERE username='${quote_sqlite:$local_part}' \
                                 AND domain='${quote_sqlite:$domain}' \
-                                AND SMTP_allowed='YES' \
+                                AND enabled=1 \
                           }{true}{false}}
   local_part_suffix     = +*
   local_part_suffix_optional

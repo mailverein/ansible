@@ -6,7 +6,7 @@
 sqlite_alias:
   driver                = redirect
   # restriction to local domains only may be a double check, as data takes care of it already ;-)
-  domains               = +local_domains
+  domains               = +virtual_domains
   file_transport        = address_file
   pipe_transport        = address_pipe
   data                  = ${if or {{\
@@ -37,7 +37,7 @@ sqlite_alias:
 sqlite_user_condition:
   driver                = accept
   # restriction to local domains only may be a double check, as the condition takes care of it already ;-)
-  domains               = +local_domains
+  domains               = +virtual_domains
   # 2006-10-08 
   # as we embed base64 encoded strings in local_part_suffix, and these are case sensitive, we must take care of them.
   # NOTE: this results in the missing feature, that conditional-mails in this router are case-sensitive! (pille#...#...@struction.de != Pille#...#...@struction.de)
@@ -90,7 +90,7 @@ sqlite_user_condition:
 sqlite_user:
   driver                = accept
   # restriction to local domains only may be a double check, as the condition takes care of it already ;-)
-  domains               = +local_domains
+  domains               = +virtual_domains
   condition             = ${lookup sqlite{CONFIGDB \
                                 SELECT CONCAT(username,'@',domain) AS email \
                                 FROM user \
@@ -112,7 +112,7 @@ sqlite_user:
 sqlite_catchall:
   driver                = redirect
   # restriction to local domains only may be a double check, as data takes care of it already ;-)
-  domains               = +local_domains
+  domains               = +virtual_domains
   file_transport        = address_file
   pipe_transport        = address_pipe
   data                  = ${lookup sqlite{CONFIGDB \

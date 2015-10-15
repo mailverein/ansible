@@ -1,7 +1,7 @@
 {% raw %}
 CONFIGDB = /usr/local/share/mail/db.sqlite
 
-domainlist virtual_domains = ${lookup sqlite { CONFIGDB\
+domainlist virtual_domains = ${lookup sqlite { CONFIGDB \
             SELECT domain FROM user WHERE domain='${quote_sqlite:$domain}' \
                   UNION \
             SELECT domain FROM alias WHERE domain='${quote_sqlite:$domain}' \

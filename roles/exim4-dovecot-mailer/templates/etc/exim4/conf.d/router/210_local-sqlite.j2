@@ -16,13 +16,13 @@ sqlite_alias:
                           }}{\
                                 ${lookup sqlite{CONFIGDB \
                                         SELECT sendto \
-                                        FROM alias \
+                                        FROM aliases \
                                         WHERE ( username='${quote_sqlite:$local_part}' \
                                         AND (domain='${quote_sqlite:$domain}' OR domain='') )}}\
                           } {\
                                 ${lookup sqlite{CONFIGDB \
                                         SELECT sendto \
-                                        FROM alias \
+                                        FROM aliases \
                                         WHERE ( ( username='${quote_sqlite:$local_part}' AND (domain='${quote_sqlite:$domain}' OR domain='') ) \
                                         AND internal='NO' )}}\
                           }}
@@ -46,7 +46,7 @@ sqlite_user_condition:
                                         # existing user
                                         eq {${lookup sqlite{CONFIGDB \
                                                 SELECT CONCAT(username,'@',domain) AS email \
-                                                FROM user \
+                                                FROM mailboxes \
                                                 WHERE username='${quote_sqlite:$local_part}' \
                                                 AND domain='${quote_sqlite:$domain}' \
                                                 AND SMTP_allowed='YES' \
@@ -93,7 +93,7 @@ sqlite_user:
   domains               = +virtual_domains
   condition             = ${lookup sqlite{CONFIGDB \
                                 SELECT CONCAT(username,'@',domain) AS email \
-                                FROM user \
+                                FROM mailboxes \
                                 WHERE username='${quote_sqlite:$local_part}' \
                                 AND domain='${quote_sqlite:$domain}' \
                                 AND SMTP_allowed='YES' \

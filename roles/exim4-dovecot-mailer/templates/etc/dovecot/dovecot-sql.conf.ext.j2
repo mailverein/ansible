@@ -105,10 +105,11 @@ default_pass_scheme = SSHA256
 #     FROM users WHERE userid = '%u' AND active = 'Y'
 #
 password_query = \
-    SELECT m.name as username, m.password FROM mailboxes AS m, domains AS d, \
-        aliases AS a WHERE d.fqdn = "%d" OR d.fqdn="brakhane.net" AND \
-        a.localpart = "%n" AND a.domainid = d.id AND a.mailboxid = m.id AND\
-        a.enabled = 1 AND  d.enabled = 1 AND m.enabled = 1
+    SELECT username || '@' || domain, password \
+    FROM mailboxes \
+    WHERE username='%n' \
+    AND domain='%d' \
+    AND enabled=1
 
 # userdb query to retrieve the user information. It can return fields:
 #   uid - System UID (overrides mail_uid setting)
@@ -140,4 +141,4 @@ password_query = \
 #  FROM users WHERE userid = '%u'
 
 # Query to get a list of all usernames.
-#iterate_query = SELECT username AS user FROM users
+iterate_query = SELECT username || '@' || domain FROM mailboxes WHERE enabled=1

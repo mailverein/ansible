@@ -30,6 +30,8 @@ exim4_dc_hide_mailname: ''
 exim4_dc_mailname_in_oh: 'true'
 exim4_dc_localdelivery: 'mail_spool'
 exim4_enable_verify_sender_callout: 'true'
+exim4_rbl_blacklisting: 'ix.dnsbl.manitu.net'
+exim4_rbl_greylisting: 'dul.dnsbl.sorbs.net:zen.spamhaus.org:dnsbl-3.uceprotect.net:bl.blocklist.de'
 
 dovecot_auth_verbose: 'yes'
 dovecot_auth_verbose_passwords: 'yes'

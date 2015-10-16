@@ -1,6 +1,5 @@
 acl_check_skip_greylist:
         deny
-        dnslists    = dul.dnsbl.sorbs.net:zen.spamhaus.org \
-                        :dnsbl-3.uceprotect.net
+        dnslists    = {{ exim4_rbl_greylisting }}
         # Accept everything else
         accept

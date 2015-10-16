@@ -8,6 +8,8 @@
 av_scanner = clamd:/var/run/clamav/clamd.ctl
 spamd_address = /run/spamassassin.sock
 
+CHECK_RCPT_IP_DNSBLS = {{ exim4_rbl_blacklisting }}
+
 # disable Ident-Lookups (e.g. GMX behaves wrong and times out)
 rfc1413_query_timeout = 0s
 

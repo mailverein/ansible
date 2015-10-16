@@ -1,7 +1,8 @@
 BEGIN TRANSACTION;
 
-INSERT INTO "mailboxes" VALUES(1,'mailbox1','planet-scheisse.de','123','name1','10/15/2015','1');
-INSERT INTO "mailboxes" VALUES(2,'mailbox2','planet-scheisse.de','123','name2','10/15/2015','1');
+-- password = asd
+INSERT INTO "mailboxes" VALUES(1,'mailbox1','planet-scheisse.de','{SSHA256}fT42NrMcA0Ki/DYxFCDf8wjJXGfpWgT7GUUmJXSR8jXTisQe','name1','10/15/2015','1');
+INSERT INTO "mailboxes" VALUES(2,'mailbox2','planet-scheisse.de','{SSHA256}fT42NrMcA0Ki/DYxFCDf8wjJXGfpWgT7GUUmJXSR8jXTisQe','name2','10/15/2015','1');
 INSERT INTO "aliases" VALUES(1,'alias1','planet-scheisse.de','finkregh@mafia-server.net, desoxyrebonukleinsaure@gmail.com','2015-10-15 18:35:19','1');
 INSERT INTO "aliases" VALUES(2,'alias2','planet-scheisse.de','finkregh@mafia-server.net, desoxyrebonukleinsaure@gmail.com','2015-10-15 18:35:19','1');
 

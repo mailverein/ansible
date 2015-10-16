@@ -2,10 +2,11 @@
 - name: install greylistd
   apt: pkg=greylistd state=installed
 
-- name: Enable greylistd in exim4-config
-  command: "greylistd-setup-exim4 -netmask=24 add"
-  register: output
-  failed_when: "'Error' in output.stderr"
-  notify:
-    - gitmaintainer commit
-    - restart exim4
+# handled by 'Update config etc/exim4/conf.d/acl/30_exim4-config_check_rcpt' (exim4)
+#- name: Enable greylistd in exim4-config
+#  command: "greylistd-setup-exim4 -netmask=24 add"
+#  register: output
+#  failed_when: "'Error' in output.stderr"
+#  notify:
+#    - gitmaintainer commit
+#    - restart exim4

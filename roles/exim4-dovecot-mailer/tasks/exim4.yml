@@ -47,13 +47,12 @@
     - gitmaintainer commit
 
 
-# file is only being changed by the greylistd-enabler
-#- name: Update config etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
-#  template: src=etc/exim4/conf.d/acl/30_exim4-config_check_rcpt.j2 dest=/etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
-#  notify:
-#    - update exim4.conf
-#    - restart exim4
-#    - gitmaintainer commit
+- name: Update config etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
+  template: src=etc/exim4/conf.d/acl/30_exim4-config_check_rcpt.j2 dest=/etc/exim4/conf.d/acl/30_exim4-config_check_rcpt
+  notify:
+    - update exim4.conf
+    - restart exim4
+    - gitmaintainer commit
 
 - name: Update config etc/exim4/conf.d/main/001_local_config
   template: src=etc/exim4/conf.d/main/001_local_config.j2 dest=/etc/exim4/conf.d/main/001_local_config

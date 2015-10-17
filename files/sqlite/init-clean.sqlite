@@ -6,7 +6,7 @@ PRAGMA INTEGRITY_CHECK;
 
 BEGIN TRANSACTION;
 CREATE TABLE 'aliases' ('id' integer NOT NULL primary key autoincrement,'username' varchar(255) NOT NULL,'domain' varchar(255) NOT NULL ,'sendto' varchar(255) NOT NULL,'last_modified' timestamp NOT NULL default CURRENT_TIMESTAMP, 'enabled' INTEGER(1) DEFAULT ('1'));
-CREATE TABLE 'catchall' ( 'id' integer NOT NULL primary key autoincrement,'domain' varchar(255) NOT NULL , 'sendto' varchar(255) NOT NULL, 'last_modified' timestamp NOT NULL default CURRENT_TIMESTAMP );
+CREATE TABLE 'catchall' ( 'id' integer NOT NULL primary key autoincrement,'domain' varchar(255) NOT NULL , 'sendto' varchar(255) NOT NULL, 'last_modified' timestamp NOT NULL default CURRENT_TIMESTAMP, 'enabled' INTEGER(1) DEFAULT ('1') );
 CREATE TABLE 'mailboxes' (
     "id" integer NOT NULL primary key autoincrement,
     "username" VARCHAR(255) NOT NULL,

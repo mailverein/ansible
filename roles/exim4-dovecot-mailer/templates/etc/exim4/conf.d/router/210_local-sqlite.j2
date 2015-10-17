@@ -3,8 +3,10 @@
 # or return a comma-seperated list of recipients.
 # when no domain is specified in db-entry, recipients are taken from all domains with a matching username
 # setting internal='YES' only allows sending mail to this alias, if authenticated (for internal usage)
+# Allows usage of sendto=":fail: Go away" which turns to a permanant SMTP error with that message
 sqlite_alias:
   driver                = redirect
+  allow_fail
   # restriction to local domains only may be a double check, as data takes care of it already ;-)
   domains               = +virtual_domains
   file_transport        = address_file
@@ -18,13 +20,14 @@ sqlite_alias:
                                         SELECT sendto \
                                         FROM aliases \
                                         WHERE ( username='${quote_sqlite:$local_part}' \
-                                        AND (domain='${quote_sqlite:$domain}' OR domain='') )}}\
+                                        AND domain='${quote_sqlite:$domain}' \
+                                        AND enabled = '1' ) }}\
                           } {\
                                 ${lookup sqlite{CONFIGDB \
                                         SELECT sendto \
                                         FROM aliases \
-                                        WHERE ( ( username='${quote_sqlite:$local_part}' AND (domain='${quote_sqlite:$domain}' OR domain='') ) \
-                                        AND internal='NO' )}}\
+                                        WHERE ( ( username='${quote_sqlite:$local_part}' AND domain='${quote_sqlite:$domain}' ) ) \
+                                        AND enabled = '1' )}}\
                           }}
   local_part_suffix     = +*
   local_part_suffix_optional
@@ -119,5 +122,6 @@ sqlite_catchall:
                                 SELECT sendto \
                                 FROM catchall \
                                 WHERE domain='${quote_sqlite:$domain}' \
+                                AND enabled=1 \
                           }}
 {% endraw %}

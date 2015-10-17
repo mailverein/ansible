@@ -53,8 +53,8 @@
     - restart dovecot
     - gitmaintainer commit
 
-- name: Update config etc/dovecot/conf.d/15-imapd.conf
-  template: src=etc/dovecot/conf.d/15-imapd.conf.j2 dest=/etc/dovecot/conf.d/15-imapd.conf
+- name: Update config etc/dovecot/conf.d/20-imap.conf
+  template: src=etc/dovecot/conf.d/20-imap.conf.j2 dest=/etc/dovecot/conf.d/20-imap.conf
   notify:
     - restart dovecot
     - gitmaintainer commit

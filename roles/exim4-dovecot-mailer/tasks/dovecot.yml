@@ -53,6 +53,12 @@
     - restart dovecot
     - gitmaintainer commit
 
+- name: Update config etc/dovecot/conf.d/15-imapd.conf
+  template: src=etc/dovecot/conf.d/15-imapd.conf.j2 dest=/etc/dovecot/conf.d/15-imapd.conf
+  notify:
+    - restart dovecot
+    - gitmaintainer commit
+
 - name: Update config etc/dovecot/conf.d/auth-sql.conf.ext
   template: src=etc/dovecot/conf.d/auth-sql.conf.ext.j2 dest=/etc/dovecot/conf.d/auth-sql.conf.ext
   notify:

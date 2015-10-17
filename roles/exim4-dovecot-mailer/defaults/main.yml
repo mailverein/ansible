@@ -32,6 +32,8 @@ exim4_dc_localdelivery: 'mail_spool'
 exim4_enable_verify_sender_callout: 'true'
 exim4_rbl_blacklisting: 'ix.dnsbl.manitu.net'
 exim4_rbl_greylisting: 'dul.dnsbl.sorbs.net:zen.spamhaus.org:dnsbl-3.uceprotect.net:bl.blocklist.de'
+exim4_queue_interval: '10m'
+exim4_listen_ports: '25:465:587'
 
 dovecot_auth_verbose: 'yes'
 dovecot_auth_verbose_passwords: 'yes'

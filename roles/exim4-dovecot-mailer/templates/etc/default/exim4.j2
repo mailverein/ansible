@@ -10,7 +10,7 @@ EX4DEF_VERSION=''
 # setting this to 'no' will also disable queueruns from /etc/ppp/ip-up.d/exim4
 QUEUERUNNER='combined'
 # how often should we run the queue
-QUEUEINTERVAL='30m'
+QUEUEINTERVAL='{{ exim4_queue_interval }}'
 # options common to quez-runner and listening daemon
 COMMONOPTIONS=''
 # more options for the daemon/process running the queue (applies to the one
@@ -21,3 +21,4 @@ QFLAGS=''
 # Options for the SMTP listener daemon. By default, it is listening on
 # port 25 only. To listen on more ports, it is recommended to use
 # -oX 25:587:10025 -oP /var/run/exim4/exim.pid
+SMTPLISTENEROPTIONS='-oX {{ exim4_listen_ports }}'

@@ -26,7 +26,7 @@ sqlite_alias:
                                 ${lookup sqlite{CONFIGDB \
                                         SELECT sendto \
                                         FROM aliases \
-                                        WHERE ( ( username='${quote_sqlite:$local_part}' AND domain='${quote_sqlite:$domain}' ) ) \
+                                        WHERE ( username='${quote_sqlite:$local_part}' AND domain='${quote_sqlite:$domain}' \
                                         AND enabled = '1' )}}\
                           }}
   local_part_suffix     = +*

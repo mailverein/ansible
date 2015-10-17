@@ -140,7 +140,7 @@
   file: path={{ exim_ssl_private_dir }} state=directory owner=root group=Debian-exim mode=0750
 
 - name: update ssl-key
-  synchronize: src={{ local_ssl_privkey }} dest={{ exim_ssl_privkey }}
+  synchronize: src={{ local_ssl_privkey }} dest={{ exim_ssl_key }}
 
 - name: set ssl-key permissions
-  file: path={{ exim_ssl_privkey }} state=file owner=root group=Debian-exim mode="u=r,g=r,o="
+  file: path={{ exim_ssl_key }} state=file owner=root group=Debian-exim mode="u=r,g=r,o="

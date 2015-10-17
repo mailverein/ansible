@@ -11,8 +11,8 @@
 - name: install spf-tools-perl
   apt: pkg=spf-tools-perl state=installed
 
-- name: Update config etc/default/exim4.j2
-  template: src=etc/default/exim4.j2.j2 dest=/etc/default/exim4.j2
+- name: Update config etc/default/exim4
+  template: src=etc/default/exim4.j2 dest=/etc/default/exim4
   notify:
     - update exim4.conf
     - restart exim4

@@ -69,10 +69,10 @@
   synchronize: src={{ local_ssl_cert }} dest={{ dovecot_ssl_cert }}
 
 - name: set ssl-cert permissions
-  file: path={{ dovecot_ssl_cert }} state=file mode="u=r,g=r,o=r"
+  file: path={{ dovecot_ssl_cert }} state=file owner=root group=dovecot mode="u=r,g=r,o="
 
 - name: update ssl-key
   synchronize: src={{ local_ssl_privkey }} dest={{ dovecot_ssl_privkey }}
 
 - name: set ssl-key permissions
-  file: path={{ dovecot_ssl_privkey }} state=file mode="u=r,g=r,o="
+  file: path={{ dovecot_ssl_privkey }} state=file owner=root group=dovecot mode="u=r,g=r,o="

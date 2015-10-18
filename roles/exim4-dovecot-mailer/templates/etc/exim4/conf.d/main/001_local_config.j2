@@ -40,7 +40,7 @@ MAIN_TLS_PRIVATEKEY = {{ exim_ssl_private_dir }}/{{ exim_ssl_key_name }}
 tls_on_connect_ports = 465
 gnutls_compat_mode = true
 
-#tls_require_ciphers = ALL:-SSLv3:-RC4:-SSLv2:!ADH:+HIGH:+MEDIUM:-LOW:-EXP
+tls_require_ciphers = {{ exim_gnutls_cipherlist }}
 
 # Take domain lists from files -> edit via FoX-Admin
 #MAIN_LOCAL_DOMAINS = CONFDIR/local_domains

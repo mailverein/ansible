@@ -42,6 +42,7 @@ exim_ssl_cert: '{{ exim_ssl_dir }}/{{ exim_ssl_cert_name }}'
 exim_ssl_key: '{{ exim_ssl_private_dir }}/{{ exim_ssl_key_name }}'
 exim_ssl_dhparams: '{{ exim_ssl_dir }}/dh{{ ssl_dhparms_size }}.pem'
 exim_gnutls_cipherlist: 'NORMAL:-VERS-SSL3.0:-CIPHER-ALL:-SHA1:-MD5:+SHA1:-RSA:+RSA:+AES-256-GCM:+AES-256-CBC:+CAMELLIA-256-CBC:+AES-128-CBC:%SERVER_PRECEDENCE'
+exim_gnutls_compat_mode: 'false'
 
 dovecot_auth_verbose: 'yes'
 dovecot_auth_verbose_passwords: 'yes'

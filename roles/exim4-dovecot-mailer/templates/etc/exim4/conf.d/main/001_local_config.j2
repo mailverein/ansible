@@ -38,7 +38,7 @@ MAIN_TLS_ENABLE = true
 MAIN_TLS_CERTIFICATE = {{ exim_ssl_dir }}/{{ exim_ssl_cert_name }}
 MAIN_TLS_PRIVATEKEY = {{ exim_ssl_private_dir }}/{{ exim_ssl_key_name }}
 tls_on_connect_ports = 465
-gnutls_compat_mode = true
+gnutls_compat_mode = {{ exim_gnutls_compat_mode }}
 
 tls_require_ciphers = {{ exim_gnutls_cipherlist }}
 

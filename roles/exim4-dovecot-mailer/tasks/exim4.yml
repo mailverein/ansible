@@ -127,6 +127,7 @@
   # FIXME make this a template, filled from configs or sqlite
   file: path=/etc/exim4/local_recipient_whitelist state=touch mode="u=rw,g=r,o=r"
   file: path=/etc/exim4/local_sender_whitelist_spam state=touch mode="u=rw,g=r,o=r"
+  file: path=/etc/exim4/local_recipient_whitelist state=touch mode="u=rw,g=r,o=r"
   notify:
     - gitmaintainer commit
 
@@ -144,3 +145,14 @@
 
 - name: set ssl-key permissions
   file: path={{ exim_ssl_key }} state=file owner=root group=Debian-exim mode="u=r,g=r,o="
+
+- name: check if dhparams exist
+  stat: path={{ exim_ssl_dhparams }}
+  register: exim_ssl_dhparams_state
+
+- name: create dhparams
+  shell: openssl dhparam -dsaparam -out {{ exim_ssl_dhparams }} {{ ssl_dhparms_size }}
+  when: exim_ssl_dhparams_state.stat.exists == False
+
+- name: set dhparams permissions
+  file: path={{ exim_ssl_dhparams }} state=file owner=root group=Debian-exim mode="u=r,g=r,o="
